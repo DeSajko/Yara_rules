@@ -1,0 +1,38 @@
+Heja,
+w tym pliku będe opisywać wraz z pracowaniem swoje nowe działania z programem yara.
+Głównie będe opisywać pomysły na napisanie danej reguły, jak rozwiązałem jakieś problemy oraz jak działam z pewnym modułem.
+
+------------------------------------------------------------------------------------------------------------------------------
+# Moduł Hash #
+Rozpoczynając przygodę z importowaniem różnych modułów do yary należy wiedzieć jak je importować poprawnie.
+
+  Podczas instalacji modułów nie wsyztskie moduły zostaną automatycznie zainstalowane wraz z yaryą. Niektóre moduły wymagają, w przypadku linuxa biblioteki OpenSSL.
+Polecam taką bibliotekę zainstalować przed samą instalacją yary. Takie działanie znacznie ułatwi pracowanie z modułami i nie będzie wymagana dodatkowa 
+konfirguracja w póżniejszym etapie. OpenSSL instalujemy za pomocą polecenia "sudo apt-get install libssl-dev" 
+
+  Korzystanie z moduł hash
+Początek zaczynamy importowaniem modułu za pomocą polecenia 'import "hash"'
+
+wartości w postaci hasha są przedstawaine w condition za pomocą polecenia hash.md5(0, filesize)/hash.sha1(0, filesize)/hash.sha256(0, filesize)
+
+  Przykładowa, prosta reguła dla modułu hash:
+------------------------------------------------------------------------------------------------------------------------------
+rule hashmodule
+{
+meta:
+  description = "Test rule for hash module in yara"
+  autor = "DeSajko"
+  date = "05.12.2022"
+  source = "example source VirusTotal"
+string:
+  /*
+  4D 5A - wartość w hexdecimalach dla programu z rozszerzeniem .exe
+  Takie wartości dla różnych rozszerzeń można znaleźć na wikipedi: https://en.wikipedia.org/wiki/List_of_file_signatures
+  /*
+  
+  $a = {4D 5A} 
+condition:
+  $a and 
+  hash.md5(0, filesize) == "Jakiś hash w MD5"
+}
+------------------------------------------------------------------------------------------------------------------------------
