@@ -16,7 +16,7 @@ Początek zaczynamy importowaniem modułu za pomocą polecenia 'import "hash"'
 wartości w postaci hasha są przedstawaine w condition za pomocą polecenia hash.md5(0, filesize)/hash.sha1(0, filesize)/hash.sha256(0, filesize)
 
   Przykładowa, prosta reguła dla modułu hash:
-------------------------------------------------------------------------------------------------------------------------------
+
 rule hashmodule
 {
 meta:
@@ -36,3 +36,26 @@ condition:
   hash.md5(0, filesize) == "Jakiś hash w MD5"
 }
 ------------------------------------------------------------------------------------------------------------------------------
+
+# Korzystanie z RegularExpresion (Regex) w Yarze #
+  Podczas pracy analityka przyjdzie nam zablokować wiadomość phishingową która w teori jest taka sama lecz w praktyce jest zbudowana całkowicie inaczej. 
+Posiada złośliwe linki, przychodzi z innych domen pocztowych oraz ma inną treść w środku. W tym celu poszukujemy na podstawie kliku złośliwych wiadomości powtarzalnych danych.
+Znaleziona podobna wartość ukazująca się w wiadomościach phishingowych pozwoli na wykrywanie wiadomości za pomocą RegExa. Przykładami gdzie regex może zostać wykorzystany jest 
+powtarzający się ciąg znaków w wysyłanej kampani phishingowej. Takim ciągiem znaków może być "B1B2B31313" wartość za każdym razem jest inna lecz składnia jest taka sama.
+
+  Nieznając się na RegEx'ie z pomocą przychodzą nam dwie strony które pomogą w napisaniu Regular Expresion.
+  - https://regex101.com
+  - https://medium.com/factory-mind/regex-tutorial-a-simple-cheatsheet-by-examples-649dc1c3f285 (źródło z którego korzystam)
+  
+  Gdy chcemy zastosować Regexa w zmiennej musimy na początku użyć znaka slash "/" oraz Regexa zakończyc slashem.
+  Przykład:
+  /B[0-9]{1}B[0-9]{1}B[0-9]{6}/
+  Regex przedstawiony wyżej wykrywa stringi takie jak: "B1B2B313138" lub "B3B9B123456"
+  
+  Przykład takiej reguły z wykorzystaniem regexa:
+  
+  
+  
+
+
+
